@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pucc.datausability.sys.mapper.UserMapper">
+    <select  id="getRoleNameByUserId" parameterType="Integer" resultType="String">
+        select
+            role_name
+        from
+            x_user a
+         join x_user_role b on
+            a.id = b.user_id
+         join x_role c on
+            c.role_id = b.role_id
+        where a.id=#{userId}
+    </select>
+</mapper>

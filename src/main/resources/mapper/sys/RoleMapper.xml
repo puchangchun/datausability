@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pucc.datausability.sys.mapper.RoleMapper">
+    <select id="allRolesWithUser" resultType="com.alibaba.fastjson2.JSONObject">
+        select username,
+               role_name,
+               role_desc,
+               status,
+               email
+        from x_user a
+                 join x_user_role b on
+            a.id = b.user_id
+                 join x_role c on
+            c.role_id = b.role_id
+        where a.deleted != 1
+    </select>
+
+    <select id="findRolesWithUser" resultType="com.alibaba.fastjson2.JSONObject">
+        select username,
+        role_name,
+        role_desc,
+        status,
+        email
+        from x_user a
+        join x_user_role b on
+        a.id = b.user_id
+        join x_role c on
+        c.role_id = b.role_id
+        <where>
+            a.deleted != 1
+            <if test="username!=null">
+                and username=#{username}
+            </if>
+            <if test="rolename!=null ">
+                and role_name=#{rolename}
+            </if>
+        </where>
+    </select>
+</mapper>

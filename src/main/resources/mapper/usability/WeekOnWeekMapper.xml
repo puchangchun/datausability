@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pucc.datausability.usability.mapper.WeekOnWeekMapper">
+    <select id="findData" parameterType="String" resultType="com.alibaba.fastjson2.JSONObject">
+        select
+            dt,
+            `value`
+        from
+            data_supervisor.week_on_week t
+        where
+            t.db = #{database}
+          and t.tbl = #{table}
+        order by
+            t.dt desc
+            limit 32
+    </select>
+    <select id="findWarningData" parameterType="String" resultType="com.alibaba.fastjson2.JSONObject">
+        select
+        dt,
+        db,
+        tbl,
+        `value`,
+        notification_level
+        from
+        data_supervisor.week_on_week t
+        <where>
+            `value` not between value_min and value_max
+            <if test="dt!=null">
+                and dt=#{dt}
+            </if>
+            <if test="level!=null ">
+                and `level`=#{level}
+            </if>
+            <if test="database!=null ">
+                and db=#{database}
+            </if>
+        </where>
+    </select>
+    <select id="findWarningInfo" parameterType="String" resultType="com.alibaba.fastjson2.JSONObject">
+        select *
+        from data_supervisor.week_on_week t
+        where t.db = #{db}
+          and t.tbl = #{tbl}
+          and t.dt = #{dt}
+    </select>
+</mapper>

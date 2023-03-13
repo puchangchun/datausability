@@ -1,0 +1,24 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    username: gmall
+    password: 111111
+    url: jdbc:mysql:///data_supervisor
+  redis:
+    port: 6379
+    host: localhost
+
+logging:
+  level:
+    com.pucc: debug
+
+mybatis-plus:
+  global-config:
+    db-config:
+      # mybatis的删除逻辑配置，只会根据字段（deleted）删除
+      logic-delete-field: deleted
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+

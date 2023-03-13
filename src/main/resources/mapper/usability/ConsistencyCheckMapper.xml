@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pucc.datausability.usability.mapper.ConsistencyCheckMapper">
+    <select id="selectAllData" parameterType="String" resultType="com.alibaba.fastjson2.JSONObject">
+        select data_date,
+               database_name,
+               source_table_name,
+               source_column,
+               target_table_name,
+               target_column,
+               consistent_data_count,
+               source_table_count,
+               target_table_count,
+               target_duplicate_count
+        from data_supervisor.consistency_check cc
+        where cc.database_name = #{database}
+          and cc.target_table_name = #{table}
+        order by data_date desc
+        limit 32
+    </select>
+</mapper>
